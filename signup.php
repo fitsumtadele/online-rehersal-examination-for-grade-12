@@ -5,12 +5,12 @@ $name = $_POST['name'];
 $name= ucwords(strtolower($name));
 $gender = $_POST['gender'];
 $email = $_POST['email'];
-$college = $_POST['college'];
-$mob = $_POST['mob'];
+$address = $_POST['address'];
+$phone = $_POST['phone'];
 $password = $_POST['password'];
 $password = md5($password);
 
-$q3=mysqli_query($con,"INSERT INTO user VALUES  ('$name' , '$gender' , '$college','$email' ,'$mob', '$password')");
+$q3=mysqli_query($con,"INSERT INTO user VALUES  ('$name' , '$gender' , '$address','$email' ,'$phone', '$password')");
 if($q3)
 {
 session_start();
