@@ -9,20 +9,20 @@ $email = $_POST['email'];
 $password = $_POST['password'];
 $password=md5($password); 
 
-$result = mysqli_query($con,"SELECT name FROM user WHERE email = '$email' and password = '$password'") or die('Error');
+$result = mysqli_query($con,"SELECT first_name FROM user WHERE email = '$email' and `password` = '$password'") or die('Error');
 $count=mysqli_num_rows($result);
 
 if($count==1){
-while($row = mysqli_fetch_array($result)) {
-	$name = $row['name'];
-}
-$_SESSION["name"] = $name;
-$_SESSION["email"] = $email;
-header("location:account.php?q=1");
+	while($row = mysqli_fetch_array($result)) {
+		$name = $row['name'];
+	}
+	$_SESSION["name"] = $first_name;
+	$_SESSION["email"] = $email;
+
+header("location:index.html");
 }
 
 else
 header("location:$ref?w=Wrong Username or Password");
-
 
 ?>

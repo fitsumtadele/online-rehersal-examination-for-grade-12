@@ -3,7 +3,7 @@ body{
 }
 .register{
     background: -webkit-linear-gradient(left, #3931af, #00c6ff);
-    margin-top: 3%;
+    margin-top: 4%;
     padding: 3%;
 }
 .register-left{
@@ -52,8 +52,12 @@ body{
     padding: 10%;
     margin-top: 10%;
 }
+fieldset{
+    min-width: 35rem !important;
+    margin-left: 2rem !important;
+}
 .btnRegister{
-    float: right;
+    margin-left: 10rem !important;
     margin-top: 10%;
     border: none;
     border-radius: 1.5rem;
