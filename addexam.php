@@ -118,6 +118,14 @@ echo '
   </div>
 </div>
 
+<div class="form-group">
+  <label class="col-md-12 control-label" for="time"></label>  
+  <div class="col-md-12">
+  <input id="year" name="year" placeholder="Enter the year of the exam" class="form-control input-md" min="1" type="number">
+    
+  </div>
+</div>
+
 
 <div class="form-group">
   <label class="col-md-12 control-label" for=""></label>
@@ -220,8 +228,8 @@ $name = $_POST['name'];
 $total = $_POST['total'];
 $time = $_POST['time'];
 $type = $_POST['type'];
-$id=uniqid();
-$q3=mysqli_query($con,"INSERT INTO exams (`eid` , `exam_time` , `name` , `date_stamp`,`total` ,`type`) VALUES  ('$id','$time' , '$name' , NOW() ,'$total','$type' )")  or die('Error');
+$year = $_POST['year'];
+$q3=mysqli_query($con,"INSERT INTO exams (`exam_time` , `name` , `date_stamp`,`total` ,`type` ,`year`) VALUES  ('$time' , '$name' , NOW() ,'$total','$type','$year' )")  or die('Error');
 
 header("location:addexam.php?q=4&step=2&eid=$id&n=$total");
 }

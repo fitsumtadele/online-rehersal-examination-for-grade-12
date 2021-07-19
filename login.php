@@ -14,12 +14,12 @@ $count=mysqli_num_rows($result);
 
 if($count==1){
 	while($row = mysqli_fetch_array($result)) {
-		$name = $row['name'];
+		$name = $row['first_name'];
 	}
-	$_SESSION["name"] = $first_name;
+	$_SESSION["name"] = $name;
 	$_SESSION["email"] = $email;
 
-header("location:index.html");
+header("location:account.php");
 }
 
 else
