@@ -100,3 +100,10 @@ fieldset{
     margin-bottom: -15%;
     color: #495057;
 }
+
+@media screen and (max-width: 992px) {
+    fieldset{
+        min-width: 25rem !important;
+        margin-left: 2rem !important;
+    }
+  }

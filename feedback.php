@@ -19,14 +19,14 @@
 
 <header>
               <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-                <a class="navbar-brand" href="#">ORE
+                <a class="navbar-brand" href="./index.html">ORE
 
                 </a>
                
                 <div class="collapse navbar-collapse" id="navbarCollapse">
                   <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                      <a class="nav-link" href="./index.htmlccxx">Home <span class="sr-only">(current)</span></a>
+                      <a class="nav-link" href="./index.html">Home <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Take Exam</a>
@@ -53,20 +53,21 @@
         
 
 
-<div class="bg1">
+<div style="background-color: blue;
+    min-height: 936px;">
 <div class="row">
 <div class="col-md-3"></div>
-<div class="col-md-6 panel" style="background-image:url(image/bg1.jpg); min-height:430px;">
+<div class="col-md-6 panel" style="background-color:#59aba8; min-height:630px;">
 <h2 align="center" style="font-family:'typo'; color:#000066">FEEDBACK/REPORT A PROBLEM</h2>
 <div style="font-size:14px">
 <?php if(@$_GET['q'])echo '<span style="font-size:18px;"><span class="fa fa-ok" aria-hidden="true"></span>&nbsp;'.@$_GET['q'].'</span>';
 else
 {echo' 
 You can send us your feedback through e-mail on the following e-mail id:<br />
-<div class="row">
+<div class="row ml-3">
 <div class="col-md-1"></div>
 <div class="col-md-10">
-<a href="mailto:chiraggoel.53784@gmail.com" style="color:#000000">sunnygkp10@gmail.com</a><br /><br />
+<a href="mailto:fitsumtadele19@gmail.com" style="color:#000000">fitsumtadele19@gmail.com</a><br /><br />
 </div><div class="col-md-1"></div></div>
 <p>Or you can directly submit your feedback by filling the enteries below:-</p>
 <form role="form"  method="post" action="feed.php?q=feedback.php">
