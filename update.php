@@ -6,7 +6,7 @@ $email=$_SESSION['email'];
 if(isset($_SESSION['email'])){
 if(@$_GET['fdid']) {
 $id=@$_GET['fdid'];
-$result = mysqli_query($con,"DELETE FROM feedback WHERE id='$id' ") or die('Error');
+$result = mysqli_query($con,"DELETE FROM feedback WHERE feed_id='$id' ") or die('Error');
 header("location:admin.php?q=3");
 }
 }
@@ -29,37 +29,21 @@ header("location:dash.php?q=5");
 }
 }
 
-//add quiz
-if(isset($_SESSION['key'])){
-if(@$_GET['q']== 'addquiz' && $_SESSION['key']=='sunny7785068889') {
-$name = $_POST['name'];
-$name= ucwords(strtolower($name));
-$total = $_POST['total'];
-$sahi = $_POST['right'];
-$wrong = $_POST['wrong'];
-$time = $_POST['time'];
-$tag = $_POST['tag'];
-$desc = $_POST['desc'];
-$id=uniqid();
-$q3=mysqli_query($con,"INSERT INTO quiz VALUES  ('$id','$name' , '$sahi' , '$wrong','$total','$time' ,'$desc','$tag', NOW())");
 
-header("location:dash.php?q=4&step=2&eid=$id&n=$total");
-}
-}
 
 //add question
-if(isset($_SESSION['key'])){
-if(@$_GET['q']== 'addqns' && $_SESSION['key']=='sunny7785068889') {
+if(isset($_SESSION['email'])){
+if(@$_GET['q']== 'addqns') {
 $n=@$_GET['n'];
 $eid=@$_GET['eid'];
 $ch=@$_GET['ch'];
 
 for($i=1;$i<=$n;$i++)
  {
- $qid=uniqid();
+  $qid=uniqid();
  $qns=$_POST['qns'.$i];
-$q3=mysqli_query($con,"INSERT INTO questions VALUES  ('$eid','$qid','$qns' , '$ch' , '$i')");
-  $oaid=uniqid();
+ $q3=mysqli_query($con,"INSERT INTO questions ( `qid` , `qns` , `choice` , `answer`) VALUES  ('$qid','$qns' , '$ch' , '$i')");
+ $oaid=uniqid();
   $obid=uniqid();
 $ocid=uniqid();
 $odid=uniqid();
@@ -67,10 +51,10 @@ $a=$_POST[$i.'1'];
 $b=$_POST[$i.'2'];
 $c=$_POST[$i.'3'];
 $d=$_POST[$i.'4'];
-$qa=mysqli_query($con,"INSERT INTO options VALUES  ('$qid','$a','$oaid')") or die('Error61');
-$qb=mysqli_query($con,"INSERT INTO options VALUES  ('$qid','$b','$obid')") or die('Error62');
-$qc=mysqli_query($con,"INSERT INTO options VALUES  ('$qid','$c','$ocid')") or die('Error63');
-$qd=mysqli_query($con,"INSERT INTO options VALUES  ('$qid','$d','$odid')") or die('Error64');
+$qa=mysqli_query($con,"INSERT INTO optionss (`qid` , `option` , `optionid`) VALUES  ('$qid','$a','$oaid')") or die('Error61');
+$qb=mysqli_query($con,"INSERT INTO optionss (`qid` , `option` , `optionid`) VALUES  ('$qid','$b','$obid')") or die('Error62');
+$qc=mysqli_query($con,"INSERT INTO optionss (`qid` , `option` , `optionid`) VALUES  ('$qid','$c','$ocid')") or die('Error63');
+$qd=mysqli_query($con,"INSERT INTO optionss (`qid` , `option` , `optionid`) VALUES  ('$qid','$d','$odid')") or die('Error64');
 $e=$_POST['ans'.$i];
 switch($e)
 {
@@ -91,10 +75,10 @@ $ansid=$oaid;
 }
 
 
-$qans=mysqli_query($con,"INSERT INTO answer VALUES  ('$qid','$ansid')");
+$qans=mysqli_query($con,"INSERT INTO answer (`ansid` , `qid`) VALUES  ('$ansid' , '$qid')") or die('Error65');
 
  }
-header("location:dash.php?q=0");
+header("location:login.html");
 }
 }
 

@@ -8,6 +8,7 @@ html,body{
      background: #0d161f;
 }
 
+
 #circle {
     position: absolute;
     top: 50%;
@@ -30,3 +31,45 @@ html,body{
 100% {transform: rotate(360deg);}
 } 
 
+.map-container-6{
+    overflow:hidden;
+    padding-bottom:56.25%;
+    position:relative;
+    height:0;
+    }
+.map-container-6 iframe{
+    left:0;
+    top:0;
+    height:100%;
+    width:100%;
+    position:absolute;
+    }
+
+    body{
+        background: #eee;
+    }
+    span{
+        font-size:15px;
+    }
+    a{
+      text-decoration:none; 
+      color: #0062cc;
+      border-bottom:2px solid #0062cc;
+    }
+    .box{
+        padding:60px 0px;
+    }
+    
+    .box-part{
+        background:#FFF;
+        border-radius:0;
+        padding:60px 10px;
+        margin:30px 0px;
+    }
+    .text{
+        margin:20px 0px;
+    }
+    
+    .fa{
+         color:#4183D7;
+    }

@@ -130,14 +130,14 @@ echo '</table></div></div>';
 <?php if(@$_GET['q']==3) {
 $result = mysqli_query($con,"SELECT * FROM `feedback` ORDER BY `feedback`.`date` DESC") or die('Error');
 echo  '<div class="panel"><div class="table-responsive"><table class="table table-striped title1">
-<tr><td><b>S.N.</b></td><td><b>Subject</b></td><td><b>Email</b></td><td><b>Date</b></td><td><b>Time</b></td><td><b>By</b></td><td></td><td></td></tr>';
+<tr><td><b>S.N.</b></td><td><b>Subject</b></td><td><b>Email</b></td><td><b>Date</b></td><td><b>File</b></td><td><b>Delete</b></td><td></td><td></td></tr>';
 $c=1;
 while($row = mysqli_fetch_array($result)) {
 	$date = $row['date'];
   $date= date("d-m-Y",strtotime($date));
 	$subject = $row['subject'];
 	$email = $row['email'];
-	$id = $row['id'];
+	$id = $row['feed_id'];
 	 echo '<tr><td>'.$c++.'</td>';
 	echo '<td><a title="Click to open feedback" href="admin.php?q=3&fid='.$id.'">'.$subject.'</a></td><td>'.$email.'</td><td>'.$date.'</td>
 	<td><a title="Open Feedback" href="admin.php?q=3&fid='.$id.'"><b><span class="fa fa-folder-open" aria-hidden="true"></span></b></a></td>';
@@ -154,7 +154,7 @@ echo '</table></div></div>';
 <?php if(@$_GET['fid']) {
 echo '<br />';
 $id=@$_GET['fid'];
-$result = mysqli_query($con,"SELECT * FROM feedback WHERE id='$id' ") or die('Error');
+$result = mysqli_query($con,"SELECT * FROM feedback WHERE feed_id='$id' ") or die('Error');
 while($row = mysqli_fetch_array($result)) {
 	$subject = $row['subject'];
 	$date = $row['date'];

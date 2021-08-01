@@ -229,7 +229,8 @@ $total = $_POST['total'];
 $time = $_POST['time'];
 $type = $_POST['type'];
 $year = $_POST['year'];
-$q3=mysqli_query($con,"INSERT INTO exams (`exam_time` , `name` , `date_stamp`,`total` ,`type` ,`year`) VALUES  ('$time' , '$name' , NOW() ,'$total','$type','$year' )")  or die('Error');
+$id=uniqid();
+$q3=mysqli_query($con,"INSERT INTO exams (`eid` , ,`exam_time` , `name` , `date_stamp`,`total` ,`type` ,`year`) VALUES  ('$id' , '$time' , '$name' , NOW() ,'$total','$type','$year' )")  or die('Error');
 
 header("location:addexam.php?q=4&step=2&eid=$id&n=$total");
 }
