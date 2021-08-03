@@ -68,7 +68,7 @@
 <div class="row">
 <div class="col-md-12">
 <?php
-include_once 'dbConnect.php';
+include_once 'dbconnect.php';
 if(@$_GET['q']==4 && !(@$_GET['step']) ) {
 echo ' 
 <div class="row">
@@ -230,7 +230,7 @@ $time = $_POST['time'];
 $type = $_POST['type'];
 $year = $_POST['year'];
 $id=uniqid();
-$q3=mysqli_query($con,"INSERT INTO exams (`eid` , ,`exam_time` , `name` , `date_stamp`,`total` ,`type` ,`year`) VALUES  ('$id' , '$time' , '$name' , NOW() ,'$total','$type','$year' )")  or die('Error');
+$q3=mysqli_query($con,"INSERT INTO exams (`eid` , `exam_time` , `name` , `date_stamp`,`total` ,`type` ,`year`) VALUES  ('$id' , '$time' , '$name' , NOW() ,'$total','$type','$year' )")  or die('Error00');
 
 header("location:addexam.php?q=4&step=2&eid=$id&n=$total");
 }

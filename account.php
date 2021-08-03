@@ -65,7 +65,7 @@ include_once 'dbconnect.php';
 <hr class="text-secondary">
 
 <div class="row">
-  <img class="rounded-circle mx-auto "  src="<?php echo $profile_pic?>" style="height:106px;width:106px" alt="profile pic">
+  <i class="fas fa-user" style="height:106px;width:106px;margin-left:5rem"></i>
  
 </div>
 <div class="row  my-4">
@@ -134,7 +134,7 @@ if(@$_GET['q']== 'exam' && @$_GET['step']== 2) {
 $eid=@$_GET['eid'];
 $sn=@$_GET['n'];
 $total=@$_GET['t'];
-$q=mysqli_query($con,"SELECT * FROM questions WHERE eid='$eid' AND sn='$sn' " );
+$q=mysqli_query($con,"SELECT * FROM questions WHERE eid='$eid'  " );
 echo '<div class="panel" style="margin:5%">';
 while($row=mysqli_fetch_array($q) )
 {
@@ -142,8 +142,9 @@ $qns=$row['qns'];
 $qid=$row['qid'];
 echo '<b>Question &nbsp;'.$sn.'&nbsp;::<br />'.$qns.'</b><br /><br />';
 }
-$q=mysqli_query($con,"SELECT * FROM options WHERE qid='$qid' " );
-echo '<form action="update.php?q=quiz&step=2&eid='.$eid.'&n='.$sn.'&t='.$total.'&qid='.$qid.'" method="POST"  class="form-horizontal">
+$q=mysqli_query($con,"SELECT * FROM optionss WHERE qid='$qid' " );
+
+echo '<form action="update.php?q=exam&step=2&eid='.$eid.'&n='.$sn.'&t='.$total.'&qid='.$qid.'" method="POST"  class="form-horizontal">
 <br />';
 
 while($row=mysqli_fetch_array($q) )
@@ -152,7 +153,7 @@ $option=$row['option'];
 $optionid=$row['optionid'];
 echo'<input type="radio" name="ans" value="'.$optionid.'">'.$option.'<br /><br />';
 }
-echo'<br /><button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span>&nbsp;Submit</button></form></div>';
+echo'<br /><button type="submit" class="btn btn-primary"><span class="fa fa-lock" aria-hidden="true"></span>&nbsp;Submit</button></form></div>';
 }
 
 
