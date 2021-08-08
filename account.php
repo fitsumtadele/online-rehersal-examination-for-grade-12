@@ -69,7 +69,7 @@ include_once 'dbconnect.php';
  
 </div>
 <div class="row  my-4">
-  <button class=" mx-auto btn btn-primary text-light w-100 " id="edit" >Edit <span class="mx-2 fas fa-pen"></span></button>
+  <button class=" mx-auto btn btn-primary text-light w-100 " href="edit.php" ><a href="edit.php" class="log log1">Edit</a><span class="mx-2 fas fa-pen"></span></button>
 </div>
 
 <hr class="text-secondary">
@@ -108,17 +108,21 @@ while($row = mysqli_fetch_array($result)) {
   $year = $row['year'];
   $time = $row['exam_time'];
   $eid = $row['eid'];
-
+  $sahi = $row['sahi'];
+  $wrong = $row['wrong'];
+  $title = $row['name'];
 $q12=mysqli_query($con,"SELECT score FROM history WHERE eid='$eid' AND email='$email'" )or die('Error');
 $rowcount=mysqli_num_rows($q12);  
 if($rowcount == 0){
   echo '<tr><td>'.$c++.'</td><td>'.$name.'</td><td>'.$total.'</td><td>'.$type.'</td><td>'.$year.'</td><td>'.$time.'&nbsp;min</td>
-  <td><b><a href="account.php?q=exam&step=2&eid='.$eid.'&n=1&t='.$total.'" class="pull-right btn sub1" style="margin:0px;background:#99cc32"><span class="fa fa-new-window" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Start</b></span></a></b></td></tr>';
+  <td><b><a href="account.php?q=exam&step=2&eid='.$eid.'&n=1&t='.$total.'" class="pull-right btn sub1" style="margin:0px;background:#99cc32"><span class="fa fa-external-link-alt" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Start</b></span></a></b></td></tr>';
 }
 else
 {
-echo '<tr style="color:#99cc32"><td>'.$c++.'</td><td>'.$title.'&nbsp;<span title="This quiz is already solve by you" class="fa fa-ok" aria-hidden="true"></span></td><td>'.$total.'</td><td>'.$sahi*$total.'</td><td>'.$sahi.'</td><td>'.$wrong.'</td><td>'.$time.'&nbsp;min</td>
-  </tr>';
+  
+echo '<tr style="color:#99cc32"><td>'.$c++.'</td><td>'.$name.'&nbsp;<span title="This quiz is already solve by you" class="far fa-check-circle" aria-hidden="true"></span></td><td>'.$total.'</td><td>'.$type.'</td><td>'.$year.'</td><td>'.$time.'&nbsp;min</td>
+<td><b><a href="update.php?q=quizre&step=25&eid='.$eid.'&n=1&t='.$total.'" class="pull-right btn sub1" style="margin:0px;background:red"><i class="fas fa-sync fa-spin" aria-hidden="true"></i></span>&nbsp;<span class="title1"><b>Restart</b></span></a></b></td></tr>';
+
 }
 }
 $c=0;
@@ -170,18 +174,13 @@ while($row=mysqli_fetch_array($q) )
 $s=$row['score'];
 $w=$row['wrong'];
 $r=$row['sahi'];
-$qa=$row['level'];
-echo '<tr style="color:#66CCFF"><td>Total Questions</td><td>'.$qa.'</td></tr>
-      <tr style="color:#99cc32"><td>right Answer&nbsp;<span class="glyphicon glyphicon-ok-circle" aria-hidden="true"></span></td><td>'.$r.'</td></tr> 
-    <tr style="color:red"><td>Wrong Answer&nbsp;<span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></td><td>'.$w.'</td></tr>
-    <tr style="color:#66CCFF"><td>Score&nbsp;<span class="glyphicon glyphicon-star" aria-hidden="true"></span></td><td>'.$s.'</td></tr>';
+
+echo '
+      <tr style="color:#99cc32"><td>right Answer&nbsp;<span class="fa fa-ok-circle" aria-hidden="true"></span></td><td>'.$r.'</td></tr> 
+    <tr style="color:red"><td>Wrong Answer&nbsp;<span class="fa fa-remove-circle" aria-hidden="true"></span></td><td>'.$w.'</td></tr>
+    <tr style="color:#66CCFF"><td>Score&nbsp;<span class="fa fa-star" aria-hidden="true"></span></td><td>'.$s.'</td></tr>';
 }
-$q=mysqli_query($con,"SELECT * FROM rank WHERE  email='$email' " )or die('Error157');
-while($row=mysqli_fetch_array($q) )
-{
-$s=$row['score'];
-echo '<tr style="color:#990000"><td>Overall Score&nbsp;<span class="glyphicon glyphicon-stats" aria-hidden="true"></span></td><td>'.$s.'</td></tr>';
-}
+
 echo '</table></div>';
 
 }
@@ -193,7 +192,7 @@ echo '</table></div>';
 //history start
 if(@$_GET['q']== 2) 
 {
-$q=mysqli_query($con,"SELECT * FROM history WHERE email='$email' ORDER BY date DESC " )or die('Error');
+$q=mysqli_query($con,"SELECT * FROM history WHERE email='$email'  " )or die('Error');
 echo  '<div class="panel title">
 <table class="table table-striped title1" >
 <tr style="color:black"><td><b>S.N.</b></td><td><b>Exam</b></td><td><b>Date<b></td><td><b>Score</b></td>';
@@ -203,13 +202,14 @@ while($row=mysqli_fetch_array($q) )
 $eid=$row['eid'];
 $s=$row['score'];
 $w=$row['date'];
-$q23=mysqli_query($con,"SELECT title FROM exam WHERE  eid='$eid' " )or die('Error');
+$names="";
+$q23=mysqli_query($con,"SELECT * FROM exams WHERE  eid='$eid' " )or die('Error');
 while($row=mysqli_fetch_array($q23) )
 {
-$title=$row['title'];
+$names=$row['name'];
 }
 $c++;
-echo '<tr><td>'.$c.'</td><td>'.$title.'</td><td>'.$w.'</td><td>'.$s.'</td></tr>';
+echo '<tr><td>'.$c.'</td><td>'.$names.'</td><td>'.$w.'</td><td>'.$s.'</td></tr>';
 }
 echo'</table></div>';
 }

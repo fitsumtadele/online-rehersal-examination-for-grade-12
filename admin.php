@@ -43,7 +43,7 @@
       </a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="addexam.php?q=4">Add Exam</a>
-        <a class="dropdown-item" href="#">Remove Exam</a>
+        <a class="dropdown-item" href="admin.php?q=4">Remove Exam</a>
       </div>
     </li>
   </ul>
@@ -125,6 +125,29 @@ echo '</table></div></div>';
 
 
 
+<?php if(@$_GET['q']==4) {
+
+$result = mysqli_query($con,"SELECT * FROM exams") or die('Error');
+echo  '<div class="panel"><div class="table-responsive"><table class="table table-striped title1">
+<tr><td><b>S.N.</b></td><td><b>Topic</b></td><td><b>Total question</b></td><td><b>Time limit</b></td><td><b>Year</b></td><td></td></tr>';
+$c=1;
+while($row = mysqli_fetch_array($result)) {
+	$name = $row['name'];
+	$total = $row['total'];
+	$type = $row['type'];
+    $time = $row['exam_time'];
+	$eid = $row['eid'];
+  $year = $row['year'];
+
+	echo '<tr><td>'.$c++.'</td><td>'.$name.'</td><td>'.$total.'</td><td>'.$time.'&nbsp;min</td><td>'.$year.'</td>
+	<td><b><a href="update.php?q=rmquiz" class="pull-right btn sub1" style="margin:0px;background:#dc3545"><span class="fa fa-trash" aria-hidden="true"></span>&nbsp;<span class="title1"><b>Remove</b></span></a></b></td></tr>';
+
+}
+$c=0;
+echo '</table></div></div>';
+
+}
+?>
 
 <!--feedback start-->
 <?php if(@$_GET['q']==3) {

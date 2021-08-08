@@ -18,14 +18,24 @@ $eid=@$_GET['eid'];
 $result = mysqli_query($con,"SELECT * FROM questions WHERE eid='$eid' ") or die('Error');
 while($row = mysqli_fetch_array($result)) {
 	$qid = $row['qid'];
-$r1 = mysqli_query($con,"DELETE FROM options WHERE qid='$qid'") or die('Error');
+$r1 = mysqli_query($con,"DELETE FROM optionss WHERE qid='$qid'") or die('Error');
 $r2 = mysqli_query($con,"DELETE FROM answer WHERE qid='$qid' ") or die('Error');
 }
 $r3 = mysqli_query($con,"DELETE FROM questions WHERE eid='$eid' ") or die('Error');
 $r4 = mysqli_query($con,"DELETE FROM exams WHERE eid='$eid' ") or die('Error');
 $r4 = mysqli_query($con,"DELETE FROM history WHERE eid='$eid' ") or die('Error');
 
-header("location:dash.php?q=5");
+echo'<div id= "toadd" class="" >
+                <div class=" w3-animate-zoom">
+                  <div class="container" id="success" >
+                      <div class="alert alert-success alert-dismissible fade show">
+                          <strong>!</strong> Successfully Deleted!!
+                          <P>
+                          <button type="button"class="btn btn-primary align-self-center my-3" data-dismiss="alert"><a  href="admin.php?q=4  "><span aria-hidden="true"></span>&nbsp;OK</a></button></P>
+                      </div>
+                  </div>
+                </div>
+              </div>';
 }
 }
 
@@ -82,7 +92,7 @@ header("location:login.html");
 }
 }
 
-//quiz start
+//exam start
 if(@$_GET['q']== 'exam' && @$_GET['step']== 2) {
 $eid=@$_GET['eid'];
 $sn=@$_GET['n'];
@@ -103,7 +113,7 @@ $sahi=$row['sahi'];
 }
 if($sn == 1)
 {
-$q=mysqli_query($con,"INSERT INTO history (`email` , `eid` , `score` , `sahi`,`wrong` ,`date` ) VALUES('$email','$eid' ,'0','0','0',NOW())")or die('Error');
+$q=mysqli_query($con,"INSERT INTO history (`email` , `eid` , `score` , `sahi`,`wrong` ,`date` ) VALUES('$email','$eid' ,'$total','0','0',NOW())")or die('Error');
 }
 $q=mysqli_query($con,"SELECT * FROM history WHERE eid='$eid' AND email='$email' ")or die('Error115');
 
@@ -113,13 +123,13 @@ $s=$row['score'];
 $r=$row['sahi'];
 }
 $r++;
-$s=$s+$sahi;
+
 $q=mysqli_query($con,"UPDATE `history` SET `score`=$s, `sahi`=$r, date= NOW()  WHERE  email = '$email' AND eid = '$eid'")or die('Error124');
 
 } 
 else
 {
-$q=mysqli_query($con,"SELECT * FROM exam WHERE eid='$eid' " )or die('Error129');
+$q=mysqli_query($con,"SELECT * FROM exams WHERE eid='$eid' " )or die('Error129');
 
 while($row=mysqli_fetch_array($q) )
 {
@@ -151,7 +161,7 @@ header("location:account.php?q=result&eid=$eid");
 }
 }
 
-//restart quiz
+//restart exam
 if(@$_GET['q']== 'quizre' && @$_GET['step']== 25 ) {
 $eid=@$_GET['eid'];
 $n=@$_GET['n'];
@@ -162,16 +172,82 @@ while($row=mysqli_fetch_array($q) )
 $s=$row['score'];
 }
 $q=mysqli_query($con,"DELETE FROM `history` WHERE eid='$eid' AND email='$email' " )or die('Error184');
-$q=mysqli_query($con,"SELECT * FROM rank WHERE email='$email'" )or die('Error161');
-while($row=mysqli_fetch_array($q) )
-{
-$sun=$row['score'];
-}
-$sun=$sun-$s;
-$q=mysqli_query($con,"UPDATE `rank` SET `score`=$sun ,time=NOW() WHERE email= '$email'")or die('Error174');
+
 header("location:account.php?q=exam&step=2&eid=$eid&n=1&t=$t");
 }
 
+if(@$_GET['q']== 'edit' ) {
+  
+include_once 'dbconnect.php';
+$name=$_SESSION['name'];
+  $first_name = $_POST['first_name'];
+  $last_name = $_POST['last_name'];
+  $gender = $_POST['gender'];
+  $email = $_POST['email'];
+  $address = $_POST['address'];
+  $phone = $_POST['phone'];
+  $password = $_POST['password'];
+  $password = md5($password);
+
+//update database with out image
+
+    $sql="UPDATE user SET first_name='$first_name',last_name='$last_name',email='$email', `address`='$address',
+    phone='$phone', gender='$gender' WHERE  first_name ='$name'";
+    if($con->query($sql)===true)
+    {
+        
+       //update password on account table
+        $sql="UPDATE user SET Password ='$password' WHERE  first_name ='$name'";
+        if($con->query($sql)===true)
+        {
+            echo'<div id= "toadd" class="" >
+                <div class=" w3-animate-zoom">
+                  <div class="container" id="success" >
+                      <div class="alert alert-success alert-dismissible fade show">
+                          <strong>!</strong> account information updated !!
+                          <P>
+                          <button type="button"class="btn btn-primary align-self-center my-3" data-dismiss="alert"><a  href="edit.php"><span aria-hidden="true"></span>&nbsp;OK</a></button></P>
+                      </div>
+                  </div>
+                </div>
+              </div>';
+        
+    
+        }
+        else
+        {
+            echo'<div id= "toadd" class="show" >
+      <div class=" w3-animate-zoom">
+        <div class="container p-2" id="success" >
+            <div class="alert alert-danger alert-dismissible fade show">
+            <strong>!</strong> Error:'. $sql .' <br> ' . $conn->error.' !!
+                <P>
+                <button type="button" onclick="got_to_back()"class="btn btn-primary align-self-center my-3" data-dismiss="alert">OK</button></P>
+            </div>
+        </div>
+      </div>
+    </div>';
+    return;
+        }
+
+    }
+    else
+    {
+        echo'<div id= "toadd" class="show" >
+      <div class=" w3-animate-zoom">
+        <div class="container p-2" id="success" >
+            <div class="alert alert-danger alert-dismissible fade show">
+            <strong>!</strong> Error:'. $sql .' <br> ' . $conn->error.' !!
+                <P>
+                <button type="button" onclick="got_to_back()"class="btn btn-primary align-self-center my-3" data-dismiss="alert">OK</button></P>
+            </div>
+        </div>
+      </div>
+    </div>';
+    return;
+    }
+
+}
 ?>
 
 
