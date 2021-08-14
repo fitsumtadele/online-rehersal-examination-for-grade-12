@@ -1,9 +1,4 @@
-<?php 
-// if(isset($_SESSION['email'])){
-// session_destroy();}
-// $ref= @$_GET['q'];
-// header("location:index.html");
-?>
+
 <?php
 // Initialize the session.
 // If you are using session_name("something"), don't forget it now!

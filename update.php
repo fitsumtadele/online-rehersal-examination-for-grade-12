@@ -2,7 +2,8 @@
 include_once 'dbconnect.php';
 session_start();
 $email=$_SESSION['email'];
-//delete feedback
+
+#########################################################feedback delete starts#####################################################################################
 if(isset($_SESSION['email'])){
 if(@$_GET['fdid']) {
 $id=@$_GET['fdid'];
@@ -11,7 +12,11 @@ header("location:admin.php?q=3");
 }
 }
 
-//remove exam
+
+#########################################################feedback delete ends#####################################################################################
+
+#########################################################remove exam starts#####################################################################################
+
 if(isset($_SESSION['email'])){
 if(@$_GET['q']== 'rmquiz') {
 $eid=@$_GET['eid'];
@@ -40,8 +45,10 @@ echo'<div id= "toadd" class="" >
 }
 
 
+#########################################################remove exam ends#####################################################################################
 
-//add question
+#########################################################adding questions starts#####################################################################################
+
 if(isset($_SESSION['email'])){
 if(@$_GET['q']== 'addqns') {
 $n=@$_GET['n'];
@@ -92,17 +99,25 @@ header("location:login.html");
 }
 }
 
-//exam start
+
+#########################################################adding questions ends#####################################################################################
+
+#########################################################exam start phase 2 starts#####################################################################################
 if(@$_GET['q']== 'exam' && @$_GET['step']== 2) {
 $eid=@$_GET['eid'];
 $sn=@$_GET['n'];
 $total=@$_GET['t'];
 $ans=$_POST['ans'];
 $qid=@$_GET['qid'];
+$ename=$_SESSION['ename'];
+
+
+$q=mysqli_query($con,"SELECT * FROM  WHERE qid='$qid' " );
+
 $q=mysqli_query($con,"SELECT * FROM answer WHERE qid='$qid' " );
 while($row=mysqli_fetch_array($q) )
 {
-$ansid=$row['ansid'];
+$ansid=$row['ansid'];   
 }
 if($ans == $ansid)
 {
@@ -113,7 +128,7 @@ $sahi=$row['sahi'];
 }
 if($sn == 1)
 {
-$q=mysqli_query($con,"INSERT INTO history (`email` , `eid` , `score` , `sahi`,`wrong` ,`date` ) VALUES('$email','$eid' ,'$total','0','0',NOW())")or die('Error');
+$q=mysqli_query($con,"INSERT INTO history (`email` , `eid` , `score` , `sahi`,`wrong` ,`date` , `ename` ) VALUES('$email','$eid' ,'0','0','0',NOW(),'$ename')")or die('Error');
 }
 $q=mysqli_query($con,"SELECT * FROM history WHERE eid='$eid' AND email='$email' ")or die('Error115');
 
@@ -123,6 +138,7 @@ $s=$row['score'];
 $r=$row['sahi'];
 }
 $r++;
+$s++;
 
 $q=mysqli_query($con,"UPDATE `history` SET `score`=$s, `sahi`=$r, date= NOW()  WHERE  email = '$email' AND eid = '$eid'")or die('Error124');
 
@@ -137,7 +153,7 @@ $wrong=$row['wrong'];
 }
 if($sn == 1)
 {
-$q=mysqli_query($con,"INSERT INTO history (`email` , `eid` , `score` , `sahi`,`wrong` ,`date` ) VALUES('$email','$eid' ,'0','0','0',NOW() )")or die('Error137');
+$q=mysqli_query($con,"INSERT INTO history (`email` , `eid` , `score` , `sahi`,`wrong` ,`date`, `ename` ) VALUES('$email','$eid' ,'0','0','0',NOW(), '$ename' )")or die('Error137');
 }
 $q=mysqli_query($con,"SELECT * FROM history WHERE eid='$eid' AND email='$email' " )or die('Error139');
 while($row=mysqli_fetch_array($q) )
@@ -146,7 +162,6 @@ $s=$row['score'];
 $w=$row['wrong'];
 }
 $w++;
-$s=$s-$wrong;
 $q=mysqli_query($con,"UPDATE `history` SET `score`=$s, `wrong`=$w, `date`=NOW() WHERE  email = '$email' AND eid = '$eid'")or die('Error147');
 }
 if($sn != $total)
@@ -161,11 +176,14 @@ header("location:account.php?q=result&eid=$eid");
 }
 }
 
-//restart exam
+#########################################################exam start phase 2 ends#####################################################################################
+
+#########################################################exam restart starts#####################################################################################
 if(@$_GET['q']== 'quizre' && @$_GET['step']== 25 ) {
 $eid=@$_GET['eid'];
 $n=@$_GET['n'];
 $t=@$_GET['t'];
+
 $q=mysqli_query($con,"SELECT score FROM history WHERE eid='$eid' AND email='$email'" )or die('Error156');
 while($row=mysqli_fetch_array($q) )
 {
@@ -175,6 +193,12 @@ $q=mysqli_query($con,"DELETE FROM `history` WHERE eid='$eid' AND email='$email' 
 
 header("location:account.php?q=exam&step=2&eid=$eid&n=1&t=$t");
 }
+
+
+#########################################################exam restart ends#####################################################################################
+
+
+#########################################################update account starts#####################################################################################
 
 if(@$_GET['q']== 'edit' ) {
   
@@ -247,8 +271,7 @@ $name=$_SESSION['name'];
     return;
     }
 
+#########################################################update account ends#####################################################################################
 }
 ?>
-
-
 

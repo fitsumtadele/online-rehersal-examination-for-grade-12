@@ -16,7 +16,65 @@
         <script src="js/bootstrap.min.js"  type="text/javascript"></script>
 
     </head>
+    <style type="text/css">
 
+.slogan{
+    display: flex;
+    flex-wrap: wrap;
+    font-size: 50px;
+    text-align: center;
+}
+
+.flex-item-left {
+                  /*background-color: #f1f1;*/
+                  padding: 10px;
+                  flex: 50%;
+                  color:#df9512;
+                }
+
+                .flex-item-right {
+                  /*background-color: dodgerblue;*/
+                  padding: 10px;
+                  flex: 50%;
+                }
+
+
+.card{
+    width: 98%;
+    display: flex;
+    margin: 10px 10px ;
+    }
+    .box{
+      width: 18vw;
+      height: 100px;
+      background: red;
+      display: flex !important;
+      flex-direction: row !important;
+      padding: 10px;
+      margin:20px;
+      border-radius: 2px;
+      opacity: 0.8;
+      transition: 1s;
+    }
+    .change .box{
+      width: 25vw;
+      transition: 1s;
+    }
+    .box  p{
+      margin: 20px;
+      font-size: 18px;
+      color: white;
+    }
+    .info{
+    background: white;
+    }
+    .box span{
+      font-size: 35px;
+      margin: 20px;
+      color: white;
+      margin-left: 40px;
+    }
+</style>
 <body  style="background:#eee;">
 
 
@@ -68,6 +126,44 @@
     </li>
   </ul>
 </nav>
+
+
+
+          <div class="card" style="   flex-direction: row !important; justify-content: center;">
+          <div class="box" style="background:#e26647dc;   flex-direction: row !important;">
+          <p>Total Users</p>
+          <span>
+          <?php 
+           $sel="SELECT * from user";
+          $res=mysqli_query($con,$sel);  
+          echo mysqli_num_rows($res); 
+          ?>
+          </span>
+              </div>
+
+          <div class="box" style="background:#368557dc;">
+          <p>Total Exams</p>
+          <span>
+            <?php 
+           $sel="SELECT * from exams";
+          $res=mysqli_query($con,$sel);  
+           echo mysqli_num_rows($res); 
+          ?>  
+            </span>
+            </div>
+          <div class="box" style="background:#7c8531dc;">
+          <p>Total Adminstrator</p>
+          <span>
+          <?php 
+          $sel="SELECT * from `admin`";
+          $res=mysqli_query($con,$sel);  
+          echo mysqli_num_rows($res); 
+          ?> 
+          </span>
+          </div>
+          </div>
+        
+
 
 
 <div class="container">
@@ -149,7 +245,7 @@ echo '</table></div></div>';
 }
 ?>
 
-<!--feedback start-->
+<!------------------------------------------------------------feedback start----------------------------------------------------------------------------->
 <?php if(@$_GET['q']==3) {
 $result = mysqli_query($con,"SELECT * FROM `feedback` ORDER BY `feedback`.`date` DESC") or die('Error');
 echo  '<div class="panel"><div class="table-responsive"><table class="table table-striped title1">
@@ -171,9 +267,9 @@ while($row = mysqli_fetch_array($result)) {
 echo '</table></div></div>';
 }
 ?>
-<!--feedback closed-->
+<!--------------------------------------------------------------feedback closed---------------------------------------------------------------------------->
 
-<!--feedback reading portion start-->
+<!------------------------------------------------------feedback reading portion start--------------------------------------------------------------------->
 <?php if(@$_GET['fid']) {
 echo '<br />';
 $id=@$_GET['fid'];
@@ -188,7 +284,7 @@ echo '<div class="panel"<a title="Back to Archive" href="admin.php?q=3"><b><span
  echo '<div class="mCustomScrollbar" data-mcs-theme="dark" style="margin-left:10px;margin-right:10px; max-height:450px; line-height:35px;padding:5px;"><span style="line-height:35px;padding:5px;">-&nbsp;<b>DATE:</b>&nbsp;'.$date.'</span>
 <br />'.$feedback.'</div></div>';}
 }?>
-<!--Feedback reading portion closed-->
+<!------------------------------------------------------Feedback reading portion closed------------------------------------------------------------------>
 
 
 

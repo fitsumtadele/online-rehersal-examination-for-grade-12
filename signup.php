@@ -14,7 +14,8 @@ $password = md5($password);
     $search = mysqli_query($con,"SELECT email FROM user WHERE email='$email'"); 
     $match  = mysqli_num_rows($search);
         if($match > 0){
-            echo ("Email Already Registered!!!");
+            echo ("<script>alert('Email Already Registered!!!');</script>");
+            
         }
         else{
             $q=mysqli_query($con,"INSERT INTO user (`first_name` , `last_name` , `gender` , `address`,`email` ,`phone`, `password`) VALUES  ('$first_name' , '$last_name' , '$gender' , '$address','$email' ,'$phone', '$password')");
@@ -23,8 +24,10 @@ $password = md5($password);
             session_start();
             $_SESSION["email"] = $email;
             $_SESSION["name"] = $first_name;
+
+            echo ("<script>alert('Email Already Registered!!!');
+            location.href='index.html';</script>");
             
-            header("location:index.html");
             }
         }
  

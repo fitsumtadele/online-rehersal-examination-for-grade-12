@@ -23,6 +23,6 @@ header("location:account.php");
 }
 
 else
-header("location:$ref?w=Wrong Username or Password");
+echo '<script>alert("Wrong Password")</script>';
 
 ?>

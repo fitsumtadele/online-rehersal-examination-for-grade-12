@@ -105,6 +105,10 @@ echo '
             <input type="radio" id="type" name="type" value="Social">
             <span>Social</span> 
         </label>
+        <label class="radio inline ml-5"> 
+          <input type="radio" id="type" name="type" value="Both">
+          <span>Both</span> 
+        </label>
     </div>
 </div>
 
